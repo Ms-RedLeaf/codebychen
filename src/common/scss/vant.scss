@@ -1,0 +1,53 @@
+// 修改vant 默认样式
+
+.van-tabs__wrap .van-tabs__line {
+	background-color: #444;
+}
+
+// listDetails 组件
+.listDetails,
+.songListsDetails {
+	.van-grid {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+	}
+	.van-grid-item__content {
+		padding: 10px 8px;
+		background: none;
+	}
+	.van-grid-item__text {
+		color: #000;
+	}
+	.van-grid-item__content::after {
+		border: 0;
+	}
+	.van-hairline--top::after {
+		border: 0;
+	}
+}
+
+.songListsDetails,
+.albumdetail {
+	.van-overlay {
+		background: #fff;
+	}
+	.overlay {
+		.van-overlay {
+			background: rgba(255, 255, 255, 0);
+		}
+	}
+}
+.player {
+	.van-slider__button {
+		width: 0.1rem;
+		height: 0.1rem;
+	}
+}
+#app {
+	// 底部下面好像有条缝
+	.van-tabbar--fixed {
+		bottom: -1px;
+	}
+}
