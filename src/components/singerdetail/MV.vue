@@ -19,23 +19,23 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "mv",
+  name: 'mv',
   data() {
     return {
-      mvlist: []
+      mvlist: [],
     };
   },
   created() {
     let id = this.$route.query.id;
     axios({
-      type: "get",
-      url: `http://134.175.69.66:3000/artist/mv?id=${id}`
-    }).then(res => {
+      type: 'get',
+      url: `http://172.16.1.233:3000/artist/mv?id=${id}`,
+    }).then((res) => {
       this.mvlist = res.data.mvs;
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

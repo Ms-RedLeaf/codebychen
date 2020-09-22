@@ -27,28 +27,27 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "Singerlist",
+  name: 'Singerlist',
   data() {
     return {
-      singerlist: []
+      singerlist: [],
     };
   },
 
   activated() {
     this.singerlist = [];
     axios({
-      type: "get",
-      url: `http://134.175.69.66:3000/artist/list?cat=${this.$route.query.id}`
-    }).then(res => {
+      type: 'get',
+      url: `http://172.16.1.233:3000/artist/list?cat=${this.$route.query.id}`,
+    }).then((res) => {
       this.singerlist = res.data.artists;
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
-
 .singer-top {
   width: 100%;
   position: fixed;

@@ -8,25 +8,25 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "description",
+  name: 'description',
   data() {
     return {
       desclist: [],
-      descs: []
+      descs: [],
     };
   },
   created() {
     let id = this.$route.query.id;
     axios({
-      type: "get",
-      url: `http://134.175.69.66:3000/artist/desc?id=${id}`
-    }).then(res => {
+      type: 'get',
+      url: `http://172.16.1.233:3000/artist/desc?id=${id}`,
+    }).then((res) => {
       this.desclist = res.data.introduction;
       this.descs = res.data;
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

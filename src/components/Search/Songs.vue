@@ -21,28 +21,28 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import { mapMutations } from "vuex";
+import axios from 'axios';
+import { mapMutations } from 'vuex';
 export default {
-  name: "songs",
+  name: 'songs',
   data() {
     return {
       keyword: this.$route.query.keyword,
-      songList: []
+      songList: [],
     };
   },
   methods: {
-    ...mapMutations(["play", "showPlay"]),
+    ...mapMutations(['play', 'showPlay']),
     update() {
       this.keyword = this.$route.query.keyword;
       this.songList = [];
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/search?keywords=${this.$route.query.keyword}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/search?keywords=${this.$route.query.keyword}`,
+      }).then((res) => {
         this.songList = res.data.result.songs;
       });
-    }
+    },
   },
   created() {
     this.update();
@@ -53,18 +53,18 @@ export default {
     }
   },
   computed: {
-    playList: function() {
+    playList: function () {
       let playList = [];
       this.songList.forEach((item, index) => {
         playList.push({
           id: item.id,
           name: item.name,
-          singer: item.artists
+          singer: item.artists,
         });
       });
       return playList;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -114,10 +114,10 @@ export default {
           white-space: nowrap;
           text-overflow: ellipsis;
           span:after {
-            content: "/";
+            content: '/';
           }
           span:last-child:after {
-            content: "";
+            content: '';
           }
         }
       }

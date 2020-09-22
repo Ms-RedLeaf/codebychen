@@ -141,24 +141,25 @@
     </section>
   </div>
 </template>
- <script>
-import { Toast } from "vant";
-import axios from "axios";
+
+<script>
+import axios from 'axios';
 // @ is an alias to /src
 
 export default {
-  name: "Account",
+  name: 'Account',
   components: {},
   data() {
     return {
       isShow: false,
-      qian: "签到",
-      f_color: " white",
-      bg_color: "red",
+      qian: '签到',
+      f_color: ' white',
+      bg_color: 'red',
       person: {},
-      level: "",
-      id: JSON.parse(localStorage.getItem("id")),
-      defaultimg: require("../assets/logo.png")
+      level: '',
+      id: JSON.parse(localStorage.getItem('id')),
+      // eslint-disable-next-line global-require
+      defaultimg: require('../assets/logo.png'),
     };
   },
   created() {
@@ -166,88 +167,86 @@ export default {
   },
   methods: {
     isLogin() {
-      if (this.id == undefined) {
+      // eslint-disable-next-line no-empty
+      if (this.id === undefined) {
       } else {
         this.isShow = true;
       }
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/user/detail?uid=${this.id}`
+        type: 'get',
+        url: `http://172.16.1.233:3000/user/detail?uid=${this.id}`,
       })
-        .then(res => {
+        .then((res) => {
           this.person = res.data.profile;
           this.level = res.data.level;
         })
-        .catch(err => {
-          console.log("请登录");
+        .catch(() => {
+          console.log('请登录');
         });
     },
 
     login() {
       this.$router.push({
-        name: "Register"
+        name: 'Register',
       });
     },
     ranking() {
       this.$router.push({
-        name: "Ranking"
+        name: 'Ranking',
       });
     },
     qiandao() {
-      this.qian = "已签到";
-      this.f_color = "#e8e7e7";
-      this.bg_color = "#cecece";
+      this.qian = '已签到';
+      this.f_color = '#e8e7e7';
+      this.bg_color = '#cecece';
     },
     dongtai() {
       this.$toast({
-        message: "暂时没有动态"
+        message: '暂时没有动态',
       });
     },
     concern() {
       this.$router.push({
-        name: "Concern"
+        name: 'Concern',
       });
     },
     fen() {
       this.$router.push({
-        name: "Fen"
+        name: 'Fen',
       });
     },
     message() {
       this.$router.push({
-        name: "Mymessage"
+        name: 'Mymessage',
       });
     },
     online() {
       this.$router.push({
-        name: "Home"
+        name: 'Home',
       });
     },
     about() {
       this.$router.push({
-        name: "About"
+        name: 'About',
       });
     },
     loginOut() {
       // localStorage.removeItem("id");
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/logout`
-      })
-        .then(res => {
-          console.log(res.data.code);
-          this.code = res.data.code;
-          if ((this.code = 200)) {
-            localStorage.removeItem("id");
-            this.person = {};
-            this.isShow = false;
-          }
-        })
-        .catch(err => {
-          console.log("退出登录");
-        });
-    }
-  }
+        type: 'get',
+        url: 'http://172.16.1.233:3000/logout',
+      }).then((res) => {
+        console.log(res.data.code);
+        this.code = res.data.code;
+        // eslint-disable-next-line no-cond-assign
+        if ((this.code = 200)) {
+          localStorage.removeItem('id');
+          this.person = {};
+          this.isShow = false;
+        }
+      });
+    },
+  },
 };
 </script>
 

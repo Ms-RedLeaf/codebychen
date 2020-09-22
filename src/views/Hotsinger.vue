@@ -16,22 +16,22 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "hotsinger",
+  name: 'hotsinger',
   data() {
     return {
-      hotsinger: []
+      hotsinger: [],
     };
   },
   created() {
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/artist/list"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/artist/list',
+    }).then((res) => {
       this.hotsinger = res.data.artists;
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

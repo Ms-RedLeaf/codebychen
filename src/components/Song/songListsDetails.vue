@@ -66,25 +66,25 @@
   </transition>
 </template>
 <script>
-import axios from "axios";
-import { mapMutations } from "vuex";
+import axios from 'axios';
+import { mapMutations } from 'vuex';
 export default {
-  name: "songListsDetails",
+  name: 'songListsDetails',
   data() {
     return {
       id: this.$route.query.id,
       list: {
-        creator: {}
+        creator: {},
       },
-      show: false
+      show: false,
     };
   },
   methods: {
-    updateList: function() {
+    updateList: function () {
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/playlist/detail?id=${this.id}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/playlist/detail?id=${this.id}`,
+      }).then((res) => {
         this.list = res.data.playlist;
       });
     },
@@ -97,50 +97,50 @@ export default {
     selectItem(item, index) {
       this.selectPlay({
         list: this.listDetail,
-        index: index
+        index: index,
       });
     },
-    ...mapMutations(["play", "showPlay"])
+    ...mapMutations(['play', 'showPlay']),
   },
   computed: {
     // 评论数量
-    getCommentCount: function() {
+    getCommentCount: function () {
       var count = this.list.commentCount;
       if (count < 100000) {
-        return count + "";
+        return count + '';
       } else {
-        return (count / 10000).toFixed(1) + "万";
+        return (count / 10000).toFixed(1) + '万';
       }
     },
     // 分享数量
-    getShareCount: function() {
+    getShareCount: function () {
       var count = this.list.shareCount;
       if (count < 100000) {
-        return count + "";
+        return count + '';
       } else {
-        return (count / 10000).toFixed(1) + "万";
+        return (count / 10000).toFixed(1) + '万';
       }
     },
     // 收藏数量
-    getTrackCount: function() {
+    getTrackCount: function () {
       var count = this.list.trackCount;
       if (count < 100000) {
-        return count + "";
+        return count + '';
       } else {
-        return (count / 10000).toFixed(1) + "万";
+        return (count / 10000).toFixed(1) + '万';
       }
     },
-    playList: function() {
+    playList: function () {
       let playList = [];
       this.list.tracks.forEach((item, index) => {
         playList.push({
           id: item.id,
           name: item.name,
-          singer: item.ar
+          singer: item.ar,
         });
       });
       return playList;
-    }
+    },
   },
   created() {
     this.updateList();
@@ -151,11 +151,11 @@ export default {
       // 当xid改变时 更新数据
       this.id = this.$route.query.id;
       (this.list = {
-        creator: {}
+        creator: {},
       }),
         this.updateList();
     }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

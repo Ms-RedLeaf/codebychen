@@ -32,94 +32,94 @@
 </template>
 
 <script>
-import axios from "axios";
-import Lists from "../components/Ranking/Lists.vue";
-import { mapMutations } from "vuex";
+import axios from 'axios';
+import { mapMutations } from 'vuex';
+import Lists from '../components/Ranking/Lists.vue';
+
 // 列表里没有xid 手动加一个
 const listXidName = [
-  "云音乐新歌榜",
-  "云音乐热歌榜",
-  "网易原创歌曲榜",
-  "云音乐飙升榜",
-  "云音乐电音榜",
-  "UK排行榜周榜",
-  "美国Billboard周榜",
-  "KTV唛榜",
-  "iTunes榜",
-  "Hit FM Top榜",
-  "日本Oricon周榜",
-  "韩国Melon排行榜周榜",
-  "韩国Mnet排行榜周榜",
-  "韩国Melon原声周榜",
-  "中国TOP排行榜(港台榜)",
-  "中国TOP排行榜(内地榜)",
-  "香港电台中文歌曲龙虎榜",
-  "华语金曲榜",
-  "中国嘻哈榜",
-  "法国 NRJ Vos Hits 周榜",
-  "台湾Hito排行榜",
-  "Beatport全球电子舞曲榜",
-  "云音乐ACG音乐榜",
-  "云音乐说唱榜",
-  "云音乐古典音乐榜",
-  "云音乐国电榜",
-  "抖音排行榜",
-  "新声榜",
-  "云音乐韩语榜",
-  "英国Q杂志中文版周榜",
-  "电竞音乐榜",
-  "云音乐欧美热歌榜",
-  "云音乐欧美新歌榜",
-  "说唱TOP榜"
+  '云音乐新歌榜',
+  '云音乐热歌榜',
+  '网易原创歌曲榜',
+  '云音乐飙升榜',
+  '云音乐电音榜',
+  'UK排行榜周榜',
+  '美国Billboard周榜',
+  'KTV唛榜',
+  'iTunes榜',
+  'Hit FM Top榜',
+  '日本Oricon周榜',
+  '韩国Melon排行榜周榜',
+  '韩国Mnet排行榜周榜',
+  '韩国Melon原声周榜',
+  '中国TOP排行榜(港台榜)',
+  '中国TOP排行榜(内地榜)',
+  '香港电台中文歌曲龙虎榜',
+  '华语金曲榜',
+  '中国嘻哈榜',
+  '法国 NRJ Vos Hits 周榜',
+  '台湾Hito排行榜',
+  'Beatport全球电子舞曲榜',
+  '云音乐ACG音乐榜',
+  '云音乐说唱榜',
+  '云音乐古典音乐榜',
+  '云音乐国电榜',
+  '抖音排行榜',
+  '新声榜',
+  '云音乐韩语榜',
+  '英国Q杂志中文版周榜',
+  '电竞音乐榜',
+  '云音乐欧美热歌榜',
+  '云音乐欧美新歌榜',
+  '说唱TOP榜',
 ];
 
 export default {
-  name: "ranking",
+  name: 'ranking',
   data() {
     return {
-      list: []
+      list: [],
     };
   },
   created() {
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/toplist/detail"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/toplist/detail',
+    }).then((res) => {
       this.list = res.data.list;
       // 获取歌单要一个xid
-      this.list.forEach((item, index) => {
+      this.list.forEach((item) => {
+        // eslint-disable-next-line no-param-reassign
         item.xid = listXidName.indexOf(item.name);
       });
     });
   },
   computed: {
     // 官方榜
-    officialsLists: function() {
+    officialsLists() {
       return this.list.slice(0, 4);
     },
     // 推荐榜
-    recommendedLists: function() {
+    recommendedLists() {
       return this.list.slice(4, 10);
     },
     // 全球榜
-    internationalLists: function() {
+    internationalLists() {
       return this.list.slice(10, 16);
     },
-    otherLists: function() {
+    otherLists() {
       return this.list.slice(17, 26);
-    }
+    },
   },
   methods: {
-    ...mapMutations(["showPlay"])
+    ...mapMutations(['showPlay']),
   },
   components: {
-    lists: Lists
-  }
+    lists: Lists,
+  },
 };
 </script>
 <style lang="scss" scoped>
-
-
 .officials {
   margin-top: 0.1rem;
   h4 {

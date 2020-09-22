@@ -24,32 +24,32 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import { mapMutations } from "vuex";
+import axios from 'axios';
+import { mapMutations } from 'vuex';
 export default {
-  name: "hot",
+  name: 'hot',
   data() {
     return {
       id: 0,
-      songlist: []
+      songlist: [],
     };
   },
   methods: {
-    ...mapMutations(["play"])
+    ...mapMutations(['play']),
   },
   activated() {
     this.id = this.$route.query.id;
   },
   watch: {
-    id: function() {
+    id: function () {
       this.songlist = [];
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/artists?id=${this.id}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/artists?id=${this.id}`,
+      }).then((res) => {
         this.songlist = res.data.hotSongs;
       });
-    }
+    },
   },
   computed: {
     playList() {
@@ -58,12 +58,12 @@ export default {
         playList.push({
           id: item.id,
           name: item.name,
-          singer: item.ar
+          singer: item.ar,
         });
       });
       return playList;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -125,10 +125,10 @@ export default {
         .singerName {
           float: left;
           span:after {
-            content: "/";
+            content: '/';
           }
           span:last-child:after {
-            content: "";
+            content: '';
           }
         }
         .alname {

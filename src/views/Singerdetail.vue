@@ -21,48 +21,49 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import hot from "../components/singerdetail/hot.vue";
-import MV from "../components/singerdetail/MV.vue";
-import description from "../components/singerdetail/description.vue";
-import album from "../components/singerdetail/album.vue";
-import { mapMutations } from "vuex";
+import axios from 'axios';
+import { mapMutations } from 'vuex';
+import hot from '../components/singerdetail/hot.vue';
+import MV from '../components/singerdetail/MV.vue';
+import description from '../components/singerdetail/description.vue';
+import album from '../components/singerdetail/album.vue';
+
 export default {
-  name: "singerdetail",
+  name: 'singerdetail',
   data() {
     return {
       singerdetail: [],
-      tabName: "hot"
+      tabName: 'hot',
     };
   },
   components: {
     hot,
     MV,
     description,
-    album
+    album,
   },
   methods: {
     update() {
       this.singerdetail = [];
-      let id = this.$route.query.id;
+      const { id } = this.$route.query;
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/artist/album?id=${id}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/artist/album?id=${id}`,
+      }).then((res) => {
         this.singerdetail = res.data.artist;
       });
     },
-    ...mapMutations(["showPlay"])
+    ...mapMutations(['showPlay']),
   },
   created() {
     this.update();
   },
   activated() {
-    if (this.id != this.$route.query.id) {
+    if (this.id !== this.$route.query.id) {
       // 当xid改变时 更新数据
       this.update();
     }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

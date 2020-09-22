@@ -25,26 +25,26 @@
 
 <script>
 // @ is an alias to /src
-import Recommend from "../components/Home/Recommend.vue";
-import SongList from "../components/Home/SongList.vue";
-import Radio from "../components/Home/Radio.vue";
-import { mapMutations } from "vuex";
+import { mapMutations } from 'vuex';
+import Recommend from '../components/Home/Recommend.vue';
+import SongList from '../components/Home/SongList.vue';
+import Radio from '../components/Home/Radio.vue';
 
 export default {
-  name: "home",
+  name: 'home',
   data() {
     return {
-      tabName: "Recommend"
+      tabName: 'Recommend',
     };
   },
   components: {
     Recommend,
     SongList,
-    Radio
+    Radio,
   },
   methods: {
-    ...mapMutations(["showPlay"])
-  }
+    ...mapMutations(['showPlay']),
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -60,6 +60,5 @@ export default {
   opacity: 0;
 }
 .home {
-
 }
 </style>

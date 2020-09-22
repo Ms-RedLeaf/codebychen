@@ -52,46 +52,45 @@
 <script>
 // @ is an alias to /src
 
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "search",
+  name: 'search',
   data() {
     return {
       suggest: [],
       list: {},
-      value: ""
+      value: '',
     };
   },
   created() {
     axios({
-      type: "get",
-      url: `http://134.175.69.66:3000/search/hot/detail`
-    }).then(res => {
+      type: 'get',
+      url: `http://172.16.1.233:3000/search/hot/detail`,
+    }).then((res) => {
       this.list = res.data.data;
     });
   },
   watch: {
-    value: function() {
+    value: function () {
       if (this.value.trim()) {
         axios({
-          type: "get",
-          url: `http://134.175.69.66:3000/search/suggest?keywords=${this.value}&type=mobile`
-        }).then(res => {
+          type: 'get',
+          url: `http://172.16.1.233:3000/search/suggest?keywords=${this.value}&type=mobile`,
+        }).then((res) => {
           this.suggest = res.data.result.allMatch;
         });
       }
-    }
+    },
   },
   activated() {
-    document.querySelector("input.search").focus();
+    document.querySelector('input.search').focus();
   },
   deactivated() {
-    this.value = "";
-  }
+    this.value = '';
+  },
 };
 </script>
 <style lang="scss" scoped>
-
 .sort {
   display: flex;
   justify-content: center;

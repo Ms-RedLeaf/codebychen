@@ -22,13 +22,13 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "singer",
+  name: 'singer',
   data() {
     return {
       keyword: this.$route.query.keyword,
-      singerList: []
+      singerList: [],
     };
   },
   methods: {
@@ -36,12 +36,12 @@ export default {
       this.keyword = this.$route.query.keyword;
       this.singerList = [];
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/search?type=100&keywords=${this.$route.query.keyword}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/search?type=100&keywords=${this.$route.query.keyword}`,
+      }).then((res) => {
         this.singerList = res.data.result.artists;
       });
-    }
+    },
   },
   created() {
     this.update();
@@ -50,7 +50,7 @@ export default {
     if (this.keyword != this.$route.query.keyword) {
       this.update();
     }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

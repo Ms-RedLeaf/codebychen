@@ -27,38 +27,38 @@
 
 <script>
 // @ is an alias to /src
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "radio",
+  name: 'radio',
   data() {
     return {
       banners: [],
       todayPerfereds: [],
-      newset: []
+      newset: [],
     };
   },
   created() {
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/banner?type=1"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/banner?type=1',
+    }).then((res) => {
       // 电台轮播图没数据  首页轮播图凑合下吧
       this.banners = res.data.banners;
     });
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/dj/today/perfered"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/dj/today/perfered',
+    }).then((res) => {
       this.todayPerfereds = res.data.data;
     });
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/album/newest"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/album/newest',
+    }).then((res) => {
       this.newset = res.data.albums;
     });
   },
-  components: {}
+  components: {},
 };
 </script>
 <style scoped lang="scss">

@@ -21,23 +21,23 @@
 
 <script>
 // @ is an alias to /src
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "songlist",
+  name: 'songlist',
   data() {
     return {
-      playlist: []
+      playlist: [],
     };
   },
   components: {},
   created() {
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/top/playlist?limit=20&order=hot"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/top/playlist?limit=20&order=hot',
+    }).then((res) => {
       this.playlist = res.data.playlists;
     });
-  }
+  },
 };
 </script>
 <style scoped lang="scss">

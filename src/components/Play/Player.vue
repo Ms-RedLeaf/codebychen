@@ -78,74 +78,72 @@
   </transition>
 </template>
 <script>
-import Lyric from "lrc-file-parser";
-import { mapMutations, mapState, mapGetters } from "vuex";
-import axios from "axios";
-import "../../common/font/iconfont.css";
+import Lyric from 'lrc-file-parser';
+import { mapMutations, mapState, mapGetters } from 'vuex';
+import axios from 'axios';
+import '../../common/font/iconfont.css';
 export default {
-  name: "player",
+  name: 'player',
   data() {
     return {
       // 我自己喜欢的默认歌曲
-      url: "",
+      url: '',
       songs: {
         al: {
-          picUrl: ""
-        }
+          picUrl: '',
+        },
       },
       sound: 100,
-      iconName: "play-circle-o",
+      iconName: 'play-circle-o',
       showPlayList: false,
-      modeClassName: "iconfont icon--lbxh",
+      modeClassName: 'iconfont icon--lbxh',
       lrc: {},
       tlrc: {},
-      lyric: "",
-      tlyric: "",
-      nolyric: "false",
+      lyric: '',
+      tlyric: '',
+      nolyric: 'false',
       // 是否有翻译歌词
       isTlrc: false,
       // 是否显示歌词
-      isTlrcShow: false
+      isTlrcShow: false,
     };
   },
   computed: {
-    ...mapState(["isShow", "playList", "playMode", "playIndex", "isPlay"]),
-    ...mapGetters(["playId"]),
+    ...mapState(['isShow', 'playList', 'playMode', 'playIndex', 'isPlay']),
+    ...mapGetters(['playId']),
     playModeUrl() {
       return `./${this.playMode}.png`;
-    }
+    },
   },
   methods: {
     ...mapMutations([
-      "showPlay",
-      "previousPlay",
-      "nextPlay",
-      "changePlayMode",
-      "changeIndex"
+      'showPlay',
+      'previousPlay',
+      'nextPlay',
+      'changePlayMode',
+      'changeIndex',
     ]),
     changeMode() {
       const ModeClass = [
-        "icon--lbxh",
-        "icon-danquxunhuan",
-        "icon-suijixunhuan"
+        'icon--lbxh',
+        'icon-danquxunhuan',
+        'icon-suijixunhuan',
       ];
       this.changePlayMode();
-      this.modeClassName = "iconfont " + ModeClass[this.playMode - 1];
+      this.modeClassName = 'iconfont ' + ModeClass[this.playMode - 1];
     },
     // 列表显示播放到第几个
     now() {
       const _this = this;
-      $(".playList li")
+      $('.playList li')
         .eq(this.playIndex)
-        .addClass("now")
+        .addClass('now')
         .siblings()
-        .removeClass("now");
+        .removeClass('now');
     },
     opened() {
-      var nowTop = $(".playList li")
-        .eq(this.playIndex)
-        .position().top;
-      $(".playList").animate({ scrollTop: nowTop + "px" }, 300);
+      var nowTop = $('.playList li').eq(this.playIndex).position().top;
+      $('.playList').animate({ scrollTop: nowTop + 'px' }, 300);
     },
     newLrc() {
       this.tlrc = new Lyric({});
@@ -156,7 +154,7 @@ export default {
             this.tlyric = this.tlrc.lines[line].text;
           }
         },
-        offset: -1000
+        offset: -1000,
       });
     },
     playLrc(time) {
@@ -180,42 +178,42 @@ export default {
     },
     changShowTlrc() {
       this.isTlrcShow = !this.isTlrcShow;
-    }
+    },
   },
   created() {
     this.newLrc();
     var _this = this;
-    $(function() {
-      var audio = document.getElementsByTagName("audio")[0];
+    $(function () {
+      var audio = document.getElementsByTagName('audio')[0];
       //播放暂停控制
-      $("#playPause").click(function() {
+      $('#playPause').click(function () {
         //监听音频播放时间并更新进度条
-        audio.addEventListener("timeupdate", updateProgress, false);
+        audio.addEventListener('timeupdate', updateProgress, false);
         //监听播放完成事件
-        audio.addEventListener("ended", audioEnded, false);
+        audio.addEventListener('ended', audioEnded, false);
 
         //改变暂停/播放icon
         if (audio.paused) {
           audio.play();
           _this.playLrc(audio.currentTime * 1000);
-          _this.iconName = "pause-circle-o";
+          _this.iconName = 'pause-circle-o';
         } else {
           audio.pause();
           _this.pauseLrc();
-          _this.iconName = "play-circle-o";
+          _this.iconName = 'play-circle-o';
         }
       });
 
       //读取视频长度,设置页面时长显示-loadedmetadata:指定视频/音频（audio/video）的元数据加载后触发
       //audio.duration 获取音频的时长，单位为秒
-      $("#audioTag").on("loadedmetadata", function() {
+      $('#audioTag').on('loadedmetadata', function () {
         //alert(audio.duration)
-        $("#audioTime").text(transTime(this.duration));
+        $('#audioTime').text(transTime(this.duration));
       });
 
-      var pgsWidth = $(".pgs").width(); //0.907是 进度条这个div和整个进度条图片宽度的比例
+      var pgsWidth = $('.pgs').width(); //0.907是 进度条这个div和整个进度条图片宽度的比例
       //点击进度条跳到指定点播放
-      $(".pgs").click(function(e) {
+      $('.pgs').click(function (e) {
         var rate = e.offsetX / pgsWidth;
         audio.currentTime = audio.duration * rate;
         _this.playLrc(audio.currentTime * 1000);
@@ -226,31 +224,31 @@ export default {
     function transTime(time) {
       var duration = parseInt(time);
       var minute = parseInt(duration / 60);
-      var sec = (duration % 60) + "";
-      var isM0 = ":";
+      var sec = (duration % 60) + '';
+      var isM0 = ':';
       if (minute == 0) {
-        minute = "00";
+        minute = '00';
       } else if (minute < 10) {
-        minute = "0" + minute;
+        minute = '0' + minute;
       }
       if (sec.length == 1) {
-        sec = "0" + sec;
+        sec = '0' + sec;
       }
       return minute + isM0 + sec;
     }
 
     //更新进度条
     function updateProgress() {
-      var audio = document.getElementsByTagName("audio")[0];
+      var audio = document.getElementsByTagName('audio')[0];
       var value = Math.round(
         (Math.floor(audio.currentTime) / Math.floor(audio.duration)) * 100
       );
-      $(".pgs-play").css("width", value + "%");
-      $(".played-time").html(transTime(audio.currentTime));
+      $('.pgs-play').css('width', value + '%');
+      $('.played-time').html(transTime(audio.currentTime));
     }
     //播放完成
     function audioEnded() {
-      var audio = document.getElementsByTagName("audio")[0];
+      var audio = document.getElementsByTagName('audio')[0];
       if (_this.playMode === 2) {
         // 单曲循环
         audio.play();
@@ -258,79 +256,77 @@ export default {
       } else {
         audio.currentTime = 0;
         audio.pause();
-        _this.iconName = "play-circle-o";
+        _this.iconName = 'play-circle-o';
         _this.nextPlay();
       }
     }
   },
   watch: {
     // 监听id 是否改变 切换歌曲
-    playId: function() {
+    playId: function () {
       const _this = this;
       _this.showPlayList = false;
       // 重置
-      _this.songs.al.picUrl = "";
-      var audio = document.getElementsByTagName("audio")[0];
+      _this.songs.al.picUrl = '';
+      var audio = document.getElementsByTagName('audio')[0];
       audio.currentTime = 0;
       audio.pause();
-      _this.iconName = "play-circle-o";
-      $(".play-pause>span")
-        .removeClass("icon-pause")
-        .addClass("icon-play");
+      _this.iconName = 'play-circle-o';
+      $('.play-pause>span').removeClass('icon-pause').addClass('icon-play');
 
       // 获得歌曲url
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/song/url?id=${this.playId}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/song/url?id=${this.playId}`,
+      }).then((res) => {
         _this.url = res.data.data[0].url;
         setTimeout(() => {
-          $("#playPause").click();
+          $('#playPause').click();
           _this.now();
         }, 1000);
       });
       // 获得歌曲信息
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/song/detail?ids=${this.playId}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/song/detail?ids=${this.playId}`,
+      }).then((res) => {
         _this.songs = res.data.songs[0];
       });
       // 获取歌词
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/lyric?id=${this.playId}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/lyric?id=${this.playId}`,
+      }).then((res) => {
         _this.setLrc(res.data);
       });
     },
     // 解决在播放页也可以滚动body 问题
-    isShow: function() {
+    isShow: function () {
       if (this.isShow) {
-        document.querySelector("body").style.overflowY = "hidden";
+        document.querySelector('body').style.overflowY = 'hidden';
       } else {
-        document.querySelector("body").style.overflowY = "scroll";
+        document.querySelector('body').style.overflowY = 'scroll';
       }
     },
     // 监听音量改变
-    sound: function() {
-      $("#audioTag").get(0).volume = this.sound / 100;
+    sound: function () {
+      $('#audioTag').get(0).volume = this.sound / 100;
     },
     // 播放模式改变
     isPlay() {
-      if (this.url === "") {
+      if (this.url === '') {
         return;
       }
-      var audio = document.getElementsByTagName("audio")[0];
+      var audio = document.getElementsByTagName('audio')[0];
       if (this.isPlay) {
         audio.play();
-        this.iconName = "pause-circle-o";
+        this.iconName = 'pause-circle-o';
       } else {
         audio.pause();
-        this.iconName = "play-circle-o";
+        this.iconName = 'play-circle-o';
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -401,10 +397,10 @@ export default {
           font-size: 0.1rem;
           color: rgba(255, 255, 255, 0.8);
           span:after {
-            content: "/";
+            content: '/';
           }
           span:last-child:after {
-            content: "";
+            content: '';
           }
         }
       }
@@ -573,10 +569,10 @@ export default {
           overflow: hidden;
           span {
             &::after {
-              content: "/";
+              content: '/';
             }
             &:last-child:after {
-              content: "";
+              content: '';
             }
           }
         }

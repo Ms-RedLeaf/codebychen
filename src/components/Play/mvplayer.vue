@@ -39,20 +39,20 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import { mapMutations } from "vuex";
+import axios from 'axios';
+import { mapMutations } from 'vuex';
 export default {
-  name: "mvplayer",
+  name: 'mvplayer',
 
   data() {
     return {
-      url: "",
+      url: '',
       info: {
-        name: "",
-        desc: ""
+        name: '',
+        desc: '',
       },
       relatedlist: [],
-      activeClass: 1
+      activeClass: 1,
     };
   },
   watch: {},
@@ -63,23 +63,23 @@ export default {
     },
     update(id, type) {
       this.mv = {
-        brs: ""
+        brs: '',
       };
       this.relatedlist = [];
       this.activeClass = 1;
       if (type == 1) {
         axios({
-          type: "get",
-          url: `http://134.175.69.66:3000/video/url?id=${id}`
-        }).then(res => {
+          type: 'get',
+          url: `http://172.16.1.233:3000/video/url?id=${id}`,
+        }).then((res) => {
           this.url = res.data.urls[0].url;
-          this.info = { name: "", desc: "" };
+          this.info = { name: '', desc: '' };
         });
       } else {
         axios({
-          type: "get",
-          url: `http://134.175.69.66:3000/mv/detail?mvid=${id}`
-        }).then(res => {
+          type: 'get',
+          url: `http://172.16.1.233:3000/mv/detail?mvid=${id}`,
+        }).then((res) => {
           let brsKey = Object.keys(res.data.data.brs);
           let key = brsKey[brsKey.length - 1];
           this.url = res.data.data.brs[key];
@@ -88,13 +88,13 @@ export default {
       }
 
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/related/allvideo?id=${id}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/related/allvideo?id=${id}`,
+      }).then((res) => {
         this.relatedlist = res.data.data;
       });
     },
-    ...mapMutations(["isPlay"])
+    ...mapMutations(['isPlay']),
   },
   created() {
     this.update(this.$route.query.id);
@@ -102,11 +102,10 @@ export default {
   },
   destroyed() {
     this.isPlay(true);
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
-
 .content {
   margin: 0.2rem 0;
   padding: 0 0.12rem;

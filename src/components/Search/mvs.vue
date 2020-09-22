@@ -14,13 +14,13 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "mvs",
+  name: 'mvs',
   data() {
     return {
       keyword: this.$route.query.keyword,
-      mvs: []
+      mvs: [],
     };
   },
   methods: {
@@ -28,13 +28,13 @@ export default {
       this.keyword = this.$route.query.keyword;
       this.mvs = [];
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/search?type=1004&keywords=${this.$route.query.keyword}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/search?type=1004&keywords=${this.$route.query.keyword}`,
+      }).then((res) => {
         console.log(res);
         this.mvs = res.data.result.mvs;
       });
-    }
+    },
   },
   created() {
     this.update();
@@ -43,7 +43,7 @@ export default {
     if (this.keyword != this.$route.query.keyword) {
       this.update();
     }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

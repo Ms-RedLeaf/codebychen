@@ -88,7 +88,10 @@
           <div class="name">{{ item.name }}</div>
           <div class="desc">
             <span class="num">{{ item.specialType }}首</span>
-            <span class="by">,&nbsp;&nbsp;&nbsp;&nbsp;by&nbsp;&nbsp; {{ item.creator.nickname }}</span>
+            <span class="by">
+              ,&nbsp;&nbsp;&nbsp;&nbsp;by
+              &nbsp;&nbsp; {{ item.creator.nickname }}
+            </span>
           </div>
         </div>
       </div>
@@ -98,25 +101,26 @@
 
 
 <script>
-import { mapMutations } from "vuex";
-import axios from "axios";
+import { mapMutations } from 'vuex';
+import axios from 'axios';
+
 export default {
-  name: "mine",
+  name: 'mine',
   data() {
     return {
       playlist: [],
-      myplaylist: []
+      myplaylist: [],
     };
   },
   methods: {
-    ...mapMutations(["showPlay"])
+    ...mapMutations(['showPlay']),
   },
   created() {
-    let id = JSON.parse(localStorage.getItem("id"));
+    const id = JSON.parse(localStorage.getItem('id'));
     axios({
-      url: `http://134.175.69.66:3000/user/playlist?uid=${id}`
-    }).then(res => {
-      res.data.playlist.forEach((item, index) => {
+      url: `http://172.16.1.233:3000/user/playlist?uid=${id}`,
+    }).then((res) => {
+      res.data.playlist.forEach((item) => {
         if (item.ordered) {
           this.playlist.push(item);
         } else {
@@ -124,7 +128,7 @@ export default {
         }
       });
     });
-  }
+  },
 };
 </script>
 

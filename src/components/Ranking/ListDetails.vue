@@ -45,66 +45,66 @@
   </transition>
 </template>
 <script>
-import axios from "axios";
-import { mapMutations } from "vuex";
+import axios from 'axios';
+import { mapMutations } from 'vuex';
 export default {
-  name: "listdetails",
+  name: 'listdetails',
   data() {
     return {
       xid: this.$route.query.xid,
-      list: {}
+      list: {},
     };
   },
   methods: {
-    updateList: function() {
+    updateList: function () {
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/top/list?idx=${this.xid}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/top/list?idx=${this.xid}`,
+      }).then((res) => {
         this.list = res.data.playlist;
       });
     },
-    ...mapMutations(["play", "showPlay"])
+    ...mapMutations(['play', 'showPlay']),
   },
   computed: {
     // 评论数量
-    getCommentCount: function() {
+    getCommentCount: function () {
       var count = this.list.commentCount;
       if (count < 100000) {
-        return count + "";
+        return count + '';
       } else {
-        return (count / 10000).toFixed(1) + "万";
+        return (count / 10000).toFixed(1) + '万';
       }
     },
     // 分享数量
-    getShareCount: function() {
+    getShareCount: function () {
       var count = this.list.shareCount;
       if (count < 100000) {
-        return count + "";
+        return count + '';
       } else {
-        return (count / 10000).toFixed(1) + "万";
+        return (count / 10000).toFixed(1) + '万';
       }
     },
     // 收藏数量
-    getTrackCount: function() {
+    getTrackCount: function () {
       var count = this.list.trackCount;
       if (count < 100000) {
-        return count + "";
+        return count + '';
       } else {
-        return (count / 10000).toFixed(1) + "万";
+        return (count / 10000).toFixed(1) + '万';
       }
     },
-    playList: function() {
+    playList: function () {
       let playList = [];
       this.list.tracks.forEach((item, index) => {
         playList.push({
           id: item.id,
           name: item.name,
-          singer: item.ar
+          singer: item.ar,
         });
       });
       return playList;
-    }
+    },
   },
   created() {
     this.updateList();
@@ -117,7 +117,7 @@ export default {
       this.list = {};
       this.updateList();
     }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

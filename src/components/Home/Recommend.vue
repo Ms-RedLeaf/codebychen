@@ -64,51 +64,51 @@
 
 <script>
 // @ is an alias to /src
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "recommend",
+  name: 'recommend',
   data() {
     return {
       banners: [],
       highquality: [],
       toMove: [],
       djprogram: [],
-      personalizedMv: []
+      personalizedMv: [],
     };
   },
   components: {},
   created() {
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/banner?type=2"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/banner?type=2',
+    }).then((res) => {
       this.banners = res.data.banners;
     });
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/top/playlist/highquality?limit=6"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/top/playlist/highquality?limit=6',
+    }).then((res) => {
       this.highquality = res.data.playlists;
     });
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/top/mv?limit=4"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/top/mv?limit=4',
+    }).then((res) => {
       this.toMove = res.data.data;
     });
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/personalized/djprogram"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/personalized/djprogram',
+    }).then((res) => {
       this.djprogram = res.data.result;
     });
     axios({
-      type: "get",
-      url: "http://134.175.69.66:3000/personalized/mv"
-    }).then(res => {
+      type: 'get',
+      url: 'http://172.16.1.233:3000/personalized/mv',
+    }).then((res) => {
       this.personalizedMv = res.data.result;
     });
-  }
+  },
 };
 </script>
 <style scoped lang="scss">

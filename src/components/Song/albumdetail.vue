@@ -54,37 +54,37 @@
   </transition>
 </template>
 <script>
-import axios from "axios";
-import { mapMutations } from "vuex";
+import axios from 'axios';
+import { mapMutations } from 'vuex';
 export default {
-  name: "albumdetail",
+  name: 'albumdetail',
   data() {
     return {
       id: this.$route.query.id,
       songs: [
         {
           al: {},
-          ar: [{ name: "" }]
-        }
+          ar: [{ name: '' }],
+        },
       ],
       album: { artist: {} },
-      show: false
+      show: false,
     };
   },
   methods: {
-    updateList: function() {
+    updateList: function () {
       this.songs = [
         {
           al: {},
-          ar: [{ name: "" }]
-        }
+          ar: [{ name: '' }],
+        },
       ];
       this.album = { artist: {} };
       this.show = false;
       axios({
-        type: "get",
-        url: `http://134.175.69.66:3000/album?id=${this.id}`
-      }).then(res => {
+        type: 'get',
+        url: `http://172.16.1.233:3000/album?id=${this.id}`,
+      }).then((res) => {
         this.songs = res.data.songs;
         this.album = res.data.album;
       });
@@ -95,20 +95,20 @@ export default {
     onClickHide() {
       this.show = false;
     },
-    ...mapMutations(["play", "showPlay"])
+    ...mapMutations(['play', 'showPlay']),
   },
   computed: {
-    playList: function() {
+    playList: function () {
       let playList = [];
       this.songs.forEach((item, index) => {
         playList.push({
           id: item.id,
           name: item.name,
-          singer: item.ar
+          singer: item.ar,
         });
       });
       return playList;
-    }
+    },
   },
   created() {
     this.updateList();
@@ -120,7 +120,7 @@ export default {
       this.id = this.$route.query.id;
       this.updateList();
     }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

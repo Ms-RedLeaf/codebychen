@@ -18,61 +18,61 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
+
 export default {
-  name: "fen",
+  name: 'fen',
   components: {},
   data() {
     return {
       conlist: [],
       userlist: [],
-      t: ""
+      t: '',
     };
   },
   created() {
-    let id = JSON.parse(localStorage.getItem("id"));
+    const id = JSON.parse(localStorage.getItem('id'));
     axios({
-      type: "get",
-      url: `http://134.175.69.66:3000/user/followeds?uid=${id}`
-    }).then(res => {
+      type: 'get',
+      url: `http://172.16.1.233:3000/user/followeds?uid=${id}`,
+    }).then((res) => {
       this.conlist = res.data.followeds;
-      console.log(res.data.followeds);
+
       this.index = this.conlist.index;
     });
   },
   methods: {
     onClickLeft() {
       this.$router.push({
-        name: "Account"
+        name: 'Account',
       });
     },
     ranking() {
       this.$router.push({
-        name: "Ranking"
+        name: 'Ranking',
       });
     },
 
     favor(index) {
-      // console.log(index);
+      //
 
-      let domBtn = document.querySelectorAll("button")[index];
-      if (domBtn.className == "btn btnclone") {
-        let id = JSON.parse(localStorage.getItem("id"));
+      const domBtn = document.querySelectorAll('button')[index];
+      if (domBtn.className === 'btn btnclone') {
+        const id = JSON.parse(localStorage.getItem('id'));
         axios({
-          type: "get",
-          url: `http://134.175.69.66:3000/follow?id=${id}&t=1`
-        }).then(res => {
+          type: 'get',
+          url: `http://172.16.1.233:3000/follow?id=${id}&t=1`,
+        }).then((res) => {
           this.conlist = res.data.user;
-          console.log(res.data.user);
+
           this.index = this.conlist.index;
-          console.log(t);
         });
-        domBtn.className = "btn btnconcern";
+        domBtn.className = 'btn btnconcern';
       } else {
-        domBtn.className = "btn btnclone";
+        domBtn.className = 'btn btnclone';
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -117,13 +117,13 @@ export default {
   .btnconcern {
     background: red;
     &::after {
-      content: "关注";
+      content: '关注';
     }
   }
   .btnclone {
     background: #cccccc;
     &::after {
-      content: "已关注";
+      content: '已关注';
     }
   }
 }

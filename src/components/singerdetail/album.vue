@@ -17,23 +17,23 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
-  name: "album",
+  name: 'album',
   data() {
     return {
-      albumlist: []
+      albumlist: [],
     };
   },
   created() {
     let id = this.$route.query.id;
     axios({
-      type: "get",
-      url: `http://134.175.69.66:3000/artist/album?id=${id}`
-    }).then(res => {
+      type: 'get',
+      url: `http://172.16.1.233:3000/artist/album?id=${id}`,
+    }).then((res) => {
       this.albumlist = res.data.hotAlbums;
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

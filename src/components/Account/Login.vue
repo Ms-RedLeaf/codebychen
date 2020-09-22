@@ -28,49 +28,50 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
+
 export default {
-  name: "login",
+  name: 'login',
   data() {
     return {
-      email: "cxq1503@163.com",
-      password: "15031506"
+      email: 'cxq1503@163.com',
+      password: '15031506',
     };
   },
   components: {},
   methods: {
     onClickLeft() {
       this.$router.push({
-        name: "Register"
+        name: 'Register',
       });
     },
     sendemail() {
-      var regEmail = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+      const regEmail = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
       if (!regEmail.test(this.email)) {
-        alert("邮箱格式不正确");
+        alert('邮箱格式不正确');
       }
     },
     login() {
       if (this.email && this.password) {
         axios({
-          type: "post",
-          url: `http://134.175.69.66:3000/login?email=${this.email}&password=${this.password}`
+          type: 'post',
+          url: `http://172.16.1.233:3000/login?email=${this.email}&password=${this.password}`,
         })
-          .then(res => {
+          .then((res) => {
             this.id = res.data.account.id;
-            localStorage.setItem("id", JSON.stringify(this.id));
+            localStorage.setItem('id', JSON.stringify(this.id));
             this.$router.push({
-              name: "Account"
+              name: 'Account',
             });
           })
-          .catch(err => {
-            alert("请输入正确的邮箱");
+          .catch(() => {
+            alert('请输入正确的邮箱');
           });
       } else {
-        this.$notify("请输入邮箱和密码");
+        this.$notify('请输入邮箱和密码');
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
